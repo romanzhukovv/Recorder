@@ -9,21 +9,21 @@
 /* Begin PBXBuildFile section */
 		FC2EE2DA27B4320E006307F1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2EE2D927B4320E006307F1 /* AppDelegate.swift */; };
 		FC2EE2DC27B4320E006307F1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2EE2DB27B4320E006307F1 /* SceneDelegate.swift */; };
-		FC2EE2DE27B4320E006307F1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2EE2DD27B4320E006307F1 /* ViewController.swift */; };
 		FC2EE2E127B4320E006307F1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC2EE2DF27B4320E006307F1 /* Main.storyboard */; };
 		FC2EE2E327B4320E006307F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC2EE2E227B4320E006307F1 /* Assets.xcassets */; };
 		FC2EE2E627B4320E006307F1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC2EE2E427B4320E006307F1 /* LaunchScreen.storyboard */; };
+		FC8CEBB227B43550000FDABD /* RecorderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC8CEBB127B43550000FDABD /* RecorderViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		FC2EE2D627B4320E006307F1 /* Recorder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Recorder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC2EE2D927B4320E006307F1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FC2EE2DB27B4320E006307F1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		FC2EE2DD27B4320E006307F1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		FC2EE2E027B4320E006307F1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FC2EE2E227B4320E006307F1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FC2EE2E527B4320E006307F1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FC2EE2E727B4320E006307F1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FC8CEBB127B43550000FDABD /* RecorderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecorderViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,11 +58,11 @@
 			children = (
 				FC2EE2D927B4320E006307F1 /* AppDelegate.swift */,
 				FC2EE2DB27B4320E006307F1 /* SceneDelegate.swift */,
-				FC2EE2DD27B4320E006307F1 /* ViewController.swift */,
 				FC2EE2DF27B4320E006307F1 /* Main.storyboard */,
 				FC2EE2E227B4320E006307F1 /* Assets.xcassets */,
 				FC2EE2E427B4320E006307F1 /* LaunchScreen.storyboard */,
 				FC2EE2E727B4320E006307F1 /* Info.plist */,
+				FC8CEBB127B43550000FDABD /* RecorderViewController.swift */,
 			);
 			path = Recorder;
 			sourceTree = "<group>";
@@ -138,7 +138,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FC2EE2DE27B4320E006307F1 /* ViewController.swift in Sources */,
+				FC8CEBB227B43550000FDABD /* RecorderViewController.swift in Sources */,
 				FC2EE2DA27B4320E006307F1 /* AppDelegate.swift in Sources */,
 				FC2EE2DC27B4320E006307F1 /* SceneDelegate.swift in Sources */,
 			);
