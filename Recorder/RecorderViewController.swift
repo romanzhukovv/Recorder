@@ -22,53 +22,25 @@ class RecorderViewController: UIViewController, AVAudioRecorderDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupUI()
+        requestRecordPermission()
         
-        recordingSession = AVAudioSession.sharedInstance()
-        AVAudioSession.sharedInstance().requestRecordPermission { hasPermission in
-            if hasPermission {
-                print("accepted")
-            }
-        }
-        
-        if let number = UserDefaults.standard.object(forKey: "myNumber") {
-            numberOfRecords = number as! Int
+        if let number = UserDefaults.standard.object(forKey: "myNumber") as? Int {
+            numberOfRecords = number
         }
     }
     
     @IBAction func recordButtonAction() {
         if audioRecorder == nil {
-            numberOfRecords += 1
-            let fileName = getDirectory().appendingPathComponent("\(numberOfRecords).m4a")
-            
-            let settings = [AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
-                            AVSampleRateKey: 1200,
-                            AVNumberOfChannelsKey: 1,
-                            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue]
-            
-            do {
-                audioRecorder = try AVAudioRecorder(url: fileName, settings: settings)
-                audioRecorder.delegate = self
-                audioRecorder.record()
-                recordButton.layer.cornerRadius = 15
-            } catch {
-                displayAlert(title: "Error", message: "Recording failed")
-            }
+            startRecord()
+            recordButton.layer.cornerRadius = 15
         } else {
-            audioRecorder.stop()
-            audioRecorder = nil
-            UserDefaults.standard.set(numberOfRecords, forKey: "myNumber")
+            stopRecord()
             recordingTableView.reloadData()
             recordButton.layer.cornerRadius = recordButton.frame.width/2
         }
     }
-    
-    func getDirectory() -> URL {
-        let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        let documentDirectory = path[0]
-        return documentDirectory
-    }
-    
 }
 
 extension RecorderViewController {
@@ -91,10 +63,58 @@ extension RecorderViewController {
         recordButton.layer.cornerRadius = recordButton.frame.width/2
     }
     
-    func displayAlert(title: String, message: String) {
+    private func displayAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "dismiss", style: .default))
         present(alert, animated: true)
+    }
+    
+    private func requestRecordPermission() {
+        recordingSession = AVAudioSession.sharedInstance()
+        AVAudioSession.sharedInstance().requestRecordPermission { hasPermission in
+            if hasPermission {
+                print("accepted")
+            }
+        }
+    }
+    
+    private func startRecord() {
+        numberOfRecords += 1
+        let fileName = getDirectory().appendingPathComponent("\(numberOfRecords).m4a")
+        
+        let settings = [AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+                        AVSampleRateKey: 1200,
+                        AVNumberOfChannelsKey: 1,
+                        AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue]
+        
+        do {
+            audioRecorder = try AVAudioRecorder(url: fileName, settings: settings)
+            audioRecorder.delegate = self
+            audioRecorder.record()
+        } catch {
+            displayAlert(title: "Error", message: "Recording failed")
+        }
+    }
+    
+    private func stopRecord() {
+        audioRecorder.stop()
+        audioRecorder = nil
+        UserDefaults.standard.set(numberOfRecords, forKey: "myNumber")
+    }
+    
+    private func getDirectory() -> URL {
+        let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentDirectory = path[0]
+        return documentDirectory
+    }
+    
+    private func playAudio(from path: URL) {
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: path)
+            audioPlayer.play()
+        } catch {
+            print("Errorr")
+        }
     }
 }
 
@@ -126,12 +146,7 @@ extension RecorderViewController: UITableViewDataSource, UITableViewDelegate {
         
         let path = getDirectory().appendingPathComponent("\(indexPath.row + 1).m4a")
                 
-                do {
-                    audioPlayer = try AVAudioPlayer(contentsOf: path)
-                    audioPlayer.play()
-                } catch {
-                    print("Errorr")
-                }
+        playAudio(from: path)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
