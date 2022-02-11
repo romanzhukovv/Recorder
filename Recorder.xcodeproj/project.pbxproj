@@ -13,6 +13,7 @@
 		FC2EE2E327B4320E006307F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC2EE2E227B4320E006307F1 /* Assets.xcassets */; };
 		FC2EE2E627B4320E006307F1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC2EE2E427B4320E006307F1 /* LaunchScreen.storyboard */; };
 		FC8CEBB227B43550000FDABD /* RecorderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC8CEBB127B43550000FDABD /* RecorderViewController.swift */; };
+		FC95A45527B70A5E004E2E05 /* AudioCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC95A45427B70A5E004E2E05 /* AudioCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		FC2EE2E527B4320E006307F1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FC2EE2E727B4320E006307F1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FC8CEBB127B43550000FDABD /* RecorderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecorderViewController.swift; sourceTree = "<group>"; };
+		FC95A45427B70A5E004E2E05 /* AudioCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				FC2EE2E427B4320E006307F1 /* LaunchScreen.storyboard */,
 				FC2EE2E727B4320E006307F1 /* Info.plist */,
 				FC8CEBB127B43550000FDABD /* RecorderViewController.swift */,
+				FC95A45427B70A5E004E2E05 /* AudioCell.swift */,
 			);
 			path = Recorder;
 			sourceTree = "<group>";
@@ -138,6 +141,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC95A45527B70A5E004E2E05 /* AudioCell.swift in Sources */,
 				FC8CEBB227B43550000FDABD /* RecorderViewController.swift in Sources */,
 				FC2EE2DA27B4320E006307F1 /* AppDelegate.swift in Sources */,
 				FC2EE2DC27B4320E006307F1 /* SceneDelegate.swift in Sources */,

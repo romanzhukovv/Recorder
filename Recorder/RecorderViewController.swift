@@ -124,11 +124,14 @@ extension RecorderViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        var content = cell.defaultContentConfiguration()
-        content.text = "Новая запись \(indexPath.row)"
-        content.secondaryText = "\(Date().formatted(date: .abbreviated, time: .shortened))"
-        cell.contentConfiguration = content
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! AudioCell
+//        var content = cell.defaultContentConfiguration()
+//        content.text = "Новая запись \(indexPath.row)"
+//        content.secondaryText = "\(Date().formatted(date: .abbreviated, time: .shortened))"
+//        cell.contentConfiguration = content
+        
+        cell.name.text = "Новая запись \(indexPath.row)"
+        cell.date.text = "\(Date().formatted(date: .abbreviated, time: .shortened))"
         return cell
     }
     
@@ -151,9 +154,11 @@ extension RecorderViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if selectedIndex == indexPath.row && isExpandRow == true {
-            return 200
+            return 151
+            //151
         } else {
-            return 70
+            return 51
+            //51
         }
     }
 }
