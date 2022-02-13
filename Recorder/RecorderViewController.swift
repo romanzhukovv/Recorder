@@ -48,17 +48,17 @@ extension RecorderViewController {
         navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
         navigationController?.navigationBar.backgroundColor = UIColor(displayP3Red: 229/255, green: 57/255, blue: 53/255, alpha: 1)
         
-        if #available(iOS 13, *)
-             {
-                 let statusBar = UIView(frame: (UIApplication.shared.keyWindow?.windowScene?.statusBarManager?.statusBarFrame)!)
-                 statusBar.backgroundColor = UIColor(displayP3Red: 229/255, green: 57/255, blue: 53/255, alpha: 1)
-                 UIApplication.shared.keyWindow?.addSubview(statusBar)
-             } else {
-                let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
-                if statusBar.responds(to:#selector(setter: UIView.backgroundColor)) {
-                   statusBar.backgroundColor = UIColor(displayP3Red: 229/255, green: 57/255, blue: 53/255, alpha: 1)
-                }
-             }
+//        if #available(iOS 13, *)
+//             {
+//                 let statusBar = UIView(frame: (UIApplication.shared.keyWindow?.windowScene?.statusBarManager?.statusBarFrame)!)
+//                 statusBar.backgroundColor = UIColor(displayP3Red: 229/255, green: 57/255, blue: 53/255, alpha: 1)
+//                 UIApplication.shared.keyWindow?.addSubview(statusBar)
+//             } else {
+//                let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
+//                if statusBar.responds(to:#selector(setter: UIView.backgroundColor)) {
+//                   statusBar.backgroundColor = UIColor(displayP3Red: 229/255, green: 57/255, blue: 53/255, alpha: 1)
+//                }
+//             }
         
         recordButton.layer.cornerRadius = recordButton.frame.width/2
     }
@@ -108,14 +108,14 @@ extension RecorderViewController {
         return documentDirectory
     }
     
-    private func playAudio(from path: URL) {
-        do {
-            audioPlayer = try AVAudioPlayer(contentsOf: path)
-            audioPlayer.play()
-        } catch {
-            print("Errorr")
-        }
-    }
+//    private func playAudio(from path: URL) {
+//        do {
+//            audioPlayer = try AVAudioPlayer(contentsOf: path)
+//            audioPlayer.play()
+//        } catch {
+//            print("Errorr")
+//        }
+//    }
 }
 
 extension RecorderViewController: UITableViewDataSource, UITableViewDelegate {
@@ -125,13 +125,20 @@ extension RecorderViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! AudioCell
-//        var content = cell.defaultContentConfiguration()
-//        content.text = "Новая запись \(indexPath.row)"
-//        content.secondaryText = "\(Date().formatted(date: .abbreviated, time: .shortened))"
-//        cell.contentConfiguration = content
         
         cell.name.text = "Новая запись \(indexPath.row)"
         cell.date.text = "\(Date().formatted(date: .abbreviated, time: .shortened))"
+        cell.progressSlider.setThumbImage(UIImage(named: "thumb.png"), for: .normal)
+        
+        let path = getDirectory().appendingPathComponent("\(indexPath.row + 1).m4a")
+        do {
+            let audio = try AVAudioPlayer(contentsOf: path)
+            cell.getAudio(audio: audio)
+            cell.duration.text = "\(audio.duration)"
+        } catch {
+            print("Error")
+        }
+        
         return cell
     }
     
@@ -147,18 +154,16 @@ extension RecorderViewController: UITableViewDataSource, UITableViewDelegate {
         
         recordingTableView.reloadRows(at: [indexPath], with: .automatic)
         
-        let path = getDirectory().appendingPathComponent("\(indexPath.row + 1).m4a")
-                
-        playAudio(from: path)
+//        let path = getDirectory().appendingPathComponent("\(indexPath.row + 1).m4a")
+//
+//        playAudio(from: path)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if selectedIndex == indexPath.row && isExpandRow == true {
-            return 151
-            //151
+            return 153
         } else {
             return 51
-            //51
         }
     }
 }
