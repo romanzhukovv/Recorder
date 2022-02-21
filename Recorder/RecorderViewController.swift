@@ -70,11 +70,17 @@ extension RecorderViewController {
     }
     
     private func requestRecordPermission() {
-        recordingSession = AVAudioSession.sharedInstance()
         AVAudioSession.sharedInstance().requestRecordPermission { hasPermission in
             if hasPermission {
                 print("accepted")
             }
+        }
+        
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback, options: AVAudioSession.CategoryOptions.mixWithOthers)
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch {
+            print("Error1")
         }
     }
     
@@ -88,6 +94,8 @@ extension RecorderViewController {
                         AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue]
         
         do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playAndRecord, options: AVAudioSession.CategoryOptions.mixWithOthers)
+            try AVAudioSession.sharedInstance().setActive(true)
             audioRecorder = try AVAudioRecorder(url: fileName, settings: settings)
             audioRecorder.delegate = self
             audioRecorder.record()
@@ -98,6 +106,12 @@ extension RecorderViewController {
     
     private func stopRecord() {
         audioRecorder.stop()
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback, options: AVAudioSession.CategoryOptions.mixWithOthers)
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch {
+            print("ERROR: CANNOT PLAY MUSIC IN BACKGROUND. Message from code: \(error)")
+        }
         audioRecorder = nil
         UserDefaults.standard.set(numberOfRecords, forKey: "myNumber")
     }
