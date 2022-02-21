@@ -194,7 +194,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="aju-ie-DtT" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="gPr-we-7Oi">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" largeTitles="YES" id="gPr-we-7Oi">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="91"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.89803922179999995" green="0.2235293984" blue="0.20784312490000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>

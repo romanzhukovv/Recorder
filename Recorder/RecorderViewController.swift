@@ -12,13 +12,13 @@ class RecorderViewController: UIViewController, AVAudioRecorderDelegate {
     @IBOutlet var recordButton: UIButton!
     @IBOutlet var recordingTableView: UITableView!
     
-    var recordingSession: AVAudioSession!
+//    var recordingSession: AVAudioSession!
     var audioRecorder: AVAudioRecorder!
     var audioPlayer: AVAudioPlayer!
     var numberOfRecords = 0
     
-    var selectedIndex: Int = 0
-    var isExpandRow = false
+    private var selectedIndex: Int = 0
+    private var isExpandRow = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,17 +48,17 @@ extension RecorderViewController {
         navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
         navigationController?.navigationBar.backgroundColor = UIColor(displayP3Red: 229/255, green: 57/255, blue: 53/255, alpha: 1)
         
-//        if #available(iOS 13, *)
-//             {
-//                 let statusBar = UIView(frame: (UIApplication.shared.keyWindow?.windowScene?.statusBarManager?.statusBarFrame)!)
-//                 statusBar.backgroundColor = UIColor(displayP3Red: 229/255, green: 57/255, blue: 53/255, alpha: 1)
-//                 UIApplication.shared.keyWindow?.addSubview(statusBar)
-//             } else {
-//                let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
-//                if statusBar.responds(to:#selector(setter: UIView.backgroundColor)) {
-//                   statusBar.backgroundColor = UIColor(displayP3Red: 229/255, green: 57/255, blue: 53/255, alpha: 1)
-//                }
-//             }
+        if #available(iOS 13, *)
+             {
+                 let statusBar = UIView(frame: (UIApplication.shared.keyWindow?.windowScene?.statusBarManager?.statusBarFrame)!)
+                 statusBar.backgroundColor = UIColor(displayP3Red: 229/255, green: 57/255, blue: 53/255, alpha: 1)
+                 UIApplication.shared.keyWindow?.addSubview(statusBar)
+             } else {
+                let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
+                if statusBar.responds(to:#selector(setter: UIView.backgroundColor)) {
+                   statusBar.backgroundColor = UIColor(displayP3Red: 229/255, green: 57/255, blue: 53/255, alpha: 1)
+                }
+             }
         
         recordButton.layer.cornerRadius = recordButton.frame.width/2
     }
@@ -99,6 +99,9 @@ extension RecorderViewController {
             audioRecorder = try AVAudioRecorder(url: fileName, settings: settings)
             audioRecorder.delegate = self
             audioRecorder.record()
+            let dateOfRecord = Date().formatted(date: .abbreviated, time: .shortened)
+            print(numberOfRecords)
+            UserDefaults.standard.set(dateOfRecord, forKey: "\(numberOfRecords)")
         } catch {
             displayAlert(title: "Error", message: "Recording failed")
         }
@@ -141,7 +144,9 @@ extension RecorderViewController: UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! AudioCell
         
         cell.name.text = "Новая запись \(indexPath.row)"
-        cell.date.text = "\(Date().formatted(date: .abbreviated, time: .shortened))"
+        if let dateOfRecord = UserDefaults.standard.object(forKey: "\(indexPath.row + 1)") as? String {
+            cell.date.text = "\(dateOfRecord)"
+        }
         cell.progressSlider.setThumbImage(UIImage(named: "thumb.png"), for: .normal)
         
         let path = getDirectory().appendingPathComponent("\(indexPath.row + 1).m4a")
@@ -179,6 +184,21 @@ extension RecorderViewController: UITableViewDataSource, UITableViewDelegate {
         } else {
             return 51
         }
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, _ in
+            do {
+                self.numberOfRecords -= 1
+                UserDefaults.standard.set(self.numberOfRecords, forKey: "myNumber")
+                try FileManager.default.removeItem(at: self.getDirectory().appendingPathComponent("\(indexPath.row + 1).m4a"))
+            } catch {
+                print("Error2")
+            }
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+        
+        return UISwipeActionsConfiguration(actions: [deleteAction])
     }
 }
 
