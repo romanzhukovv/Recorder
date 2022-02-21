@@ -124,15 +124,6 @@ extension RecorderViewController {
         let documentDirectory = path[0]
         return documentDirectory
     }
-    
-//    private func playAudio(from path: URL) {
-//        do {
-//            audioPlayer = try AVAudioPlayer(contentsOf: path)
-//            audioPlayer.play()
-//        } catch {
-//            print("Errorr")
-//        }
-//    }
 }
 
 extension RecorderViewController: UITableViewDataSource, UITableViewDelegate {
@@ -172,10 +163,6 @@ extension RecorderViewController: UITableViewDataSource, UITableViewDelegate {
         selectedIndex = indexPath.row
         
         recordingTableView.reloadRows(at: [indexPath], with: .automatic)
-        
-//        let path = getDirectory().appendingPathComponent("\(indexPath.row + 1).m4a")
-//
-//        playAudio(from: path)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -188,6 +175,7 @@ extension RecorderViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, _ in
+            
             do {
                 self.numberOfRecords -= 1
                 UserDefaults.standard.set(self.numberOfRecords, forKey: "myNumber")
